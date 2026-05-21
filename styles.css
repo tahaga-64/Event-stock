@@ -1,0 +1,12 @@
+:root { font-family: Inter, system-ui, sans-serif; color: #111827; background: #f3f4f6; }
+body { margin: 0; }
+.header { padding: 24px; background: white; border-bottom: 1px solid #e5e7eb; }
+.header h1 { margin: 0 0 8px; font-size: 32px; }
+.header p { margin: 0; color: #4b5563; max-width: 860px; }
+.nav { display: flex; gap: 8px; padding: 12px 24px; flex-wrap: wrap; background: #fff; border-bottom: 1px solid #e5e7eb; }
+.nav a { text-decoration: none; color: #1f2937; padding: 8px 12px; border-radius: 8px; border: 1px solid #e5e7eb; background: #f9fafb; }
+.nav a.active { background: #111827; color: #fff; border-color: #111827; }
+main { padding: 24px; }
+.card { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 20px; }
+h2 { margin-top: 0; }
+ul { margin: 8px 0 0; }
