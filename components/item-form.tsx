@@ -62,26 +62,26 @@ export function ItemForm({ mode, initial }: ItemFormProps) {
     <div className="card space-y-4">
       <h1 className="text-xl font-bold">{mode === 'create' ? '在庫を追加' : '在庫を編集'}</h1>
       <div className="space-y-2">
-        <label className="text-sm font-medium">アイテム名</label>
-        <input className="w-full rounded-xl border px-3 py-3" placeholder="例）延長コード" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
+        <label htmlFor="item-name" className="text-sm font-medium">アイテム名</label>
+        <input id="item-name" className="w-full rounded-xl border px-3 py-3" placeholder="例）延長コード" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
       </div>
       <div className="space-y-2">
-        <label className="text-sm font-medium">カテゴリ</label>
-        <input className="w-full rounded-xl border px-3 py-3" placeholder="例）電源・配線" value={form.category_name} onChange={(e) => setForm({ ...form, category_name: e.target.value })} />
+        <label htmlFor="category-name" className="text-sm font-medium">カテゴリ</label>
+        <input id="category-name" className="w-full rounded-xl border px-3 py-3" placeholder="例）電源・配線" value={form.category_name} onChange={(e) => setForm({ ...form, category_name: e.target.value })} />
       </div>
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
         <div className="space-y-2">
-          <label className="text-sm font-medium">現在庫</label>
-          <input type="number" className="w-full rounded-xl border px-3 py-3" value={form.current_stock} onChange={(e) => setForm({ ...form, current_stock: Number(e.target.value) })} />
+          <label htmlFor="current-stock" className="text-sm font-medium">現在庫</label>
+          <input id="current-stock" type="number" className="w-full rounded-xl border px-3 py-3" value={form.current_stock} onChange={(e) => setForm({ ...form, current_stock: Number(e.target.value) })} />
         </div>
         <div className="space-y-2">
-          <label className="text-sm font-medium">最低必要在庫</label>
-          <input type="number" className="w-full rounded-xl border px-3 py-3" value={form.minimum_stock} onChange={(e) => setForm({ ...form, minimum_stock: Number(e.target.value) })} />
+          <label htmlFor="minimum-stock" className="text-sm font-medium">最低必要在庫</label>
+          <input id="minimum-stock" type="number" className="w-full rounded-xl border px-3 py-3" value={form.minimum_stock} onChange={(e) => setForm({ ...form, minimum_stock: Number(e.target.value) })} />
         </div>
       </div>
       <div className="space-y-2">
-        <label className="text-sm font-medium">使用イベント回数（任意）</label>
-        <input type="number" className="w-full rounded-xl border px-3 py-3" value={form.used_events_count} onChange={(e) => setForm({ ...form, used_events_count: Number(e.target.value) })} />
+        <label htmlFor="used-events-count" className="text-sm font-medium">使用イベント回数（任意）</label>
+        <input id="used-events-count" type="number" className="w-full rounded-xl border px-3 py-3" value={form.used_events_count} onChange={(e) => setForm({ ...form, used_events_count: Number(e.target.value) })} />
       </div>
       <div className="rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm">不足予定数: <strong>{shortage}</strong> 個</div>
       <div className="space-y-2">
