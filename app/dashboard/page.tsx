@@ -4,6 +4,8 @@ import { InventoryTable } from '@/components/inventory-table';
 import { InventoryItem } from '@/types/db';
 import { getStatus } from '@/lib/inventory';
 
+export const dynamic = 'force-dynamic';
+
 export default async function DashboardPage() {
   const supabase = getSupabaseServer();
   const { data } = await supabase.from('inventory_items_view').select('*').order('updated_at', { ascending: false });
