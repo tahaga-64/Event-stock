@@ -12,7 +12,7 @@ export function InventoryTable({ items, eventAppBaseUrl }: { items: InventoryIte
   const [category, setCategory] = useState('all');
   const [onlyLow, setOnlyLow] = useState(false);
 
-  const categories = Array.from(new Set(items.map((x) => x.category_name)));
+  const categories = Array.from(new Set(items.map((x) => x.category_name).filter(Boolean)));
 
   const filtered = useMemo(() => {
     return [...items]
@@ -28,28 +28,32 @@ export function InventoryTable({ items, eventAppBaseUrl }: { items: InventoryIte
         <div className="flex items-center gap-2 rounded-xl border px-3 py-2">
           <Search size={16} className="text-slate-400" /><input placeholder="アイテム検索" className="w-full bg-transparent outline-none" value={q} onChange={(e) => setQ(e.target.value)} />
         </div>
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
           <select className="rounded-xl border px-3 py-2" onChange={(e) => setCategory(e.target.value)}>
             <option value="all">全カテゴリ</option>
             {categories.map((cat) => <option key={cat}>{cat}</option>)}
           </select>
-          <label className="flex items-center gap-2 rounded-xl border px-3 py-2 text-sm"><input type="checkbox" checked={onlyLow} onChange={(e) => setOnlyLow(e.target.checked)} />不足のみ</label>
+          <label className="flex items-center gap-2 rounded-xl border px-3 py-2 text-sm"><input type="checkbox" checked={onlyLow} onChange={(e) => setOnlyLow(e.target.checked)} />不足のみ表示</label>
         </div>
       </div>
       <div className="space-y-3">
-        {filtered.map((item) => (
-          <article key={item.id} className="card space-y-2">
-            <div className="flex items-start justify-between">
-              <h3 className="font-semibold">{item.name}</h3><StatusBadge item={item} />
-            </div>
-            <p className="text-sm text-slate-500">カテゴリ: {item.category_name} / 使用イベント: {item.used_events_count}</p>
-            <p className="text-sm">在庫 {item.current_stock} / 最低必要 {item.minimum_stock}</p>
-            <div className="flex gap-2">
-              <Link href={`/items/${item.id}/edit`} className="rounded-lg border px-3 py-1 text-sm">編集</Link>
-              <a href={`${eventAppBaseUrl}?item=${encodeURIComponent(item.name)}&qty=${item.minimum_stock - item.current_stock}`} target="_blank" className="rounded-lg bg-rose-600 px-3 py-1 text-sm text-white">購入申請</a>
-            </div>
-          </article>
-        ))}
+        {filtered.map((item) => {
+          const purchaseQty = Math.max(item.minimum_stock - item.current_stock, 0);
+          return (
+            <article key={item.id} className="card space-y-2">
+              <div className="flex items-start justify-between gap-3">
+                <h3 className="font-semibold">{item.name}</h3><StatusBadge item={item} />
+              </div>
+              <p className="text-sm text-slate-500">カテゴリ: {item.category_name || '-'} / 使用イベント: {item.used_events_count}</p>
+              <p className="text-sm">在庫 {item.current_stock} / 最低必要 {item.minimum_stock}</p>
+              <div className="flex flex-wrap gap-2">
+                <Link href={`/items/${item.id}/edit`} className="rounded-lg border px-3 py-1 text-sm">編集</Link>
+                <a href={`${eventAppBaseUrl}?item=${encodeURIComponent(item.name)}&qty=${purchaseQty}`} target="_blank" className="rounded-lg bg-rose-600 px-3 py-1 text-sm text-white">イベント管理へ申請</a>
+              </div>
+            </article>
+          );
+        })}
+        {filtered.length === 0 && <p className="card text-sm text-slate-500">該当する在庫がありません。</p>}
       </div>
     </section>
   );
