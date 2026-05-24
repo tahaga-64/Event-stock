@@ -3,6 +3,8 @@ import { ItemForm } from '@/components/item-form';
 import { getSupabaseServer } from '@/lib/supabase-server';
 import type { InventoryItemInput } from '@/types/db';
 
+export const dynamic = 'force-dynamic';
+
 export default async function EditItemPage({ params }: { params: { id: string } }) {
   const supabase = getSupabaseServer();
   const { data } = await supabase.from('inventory_items').select('*').eq('id', params.id).single();
